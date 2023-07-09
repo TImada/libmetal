@@ -7,8 +7,8 @@
  */
 
 /*
- * @file	freertos/raspi4/sys.c
- * @brief	machine specific system primitives implementation.
+ * @file    freertos/raspi4/sys.c
+ * @brief    machine specific system primitives implementation.
  */
 
 #include <stdint.h>
@@ -27,13 +27,13 @@ extern void invalidate_dcache_range(void *addr, void *end);
 void sys_irq_restore_enable(unsigned int flags)
 {
     (void)flags;
-	__asm__ __volatile__("msr DAIFClr, %0\n\t" : : "i" (DAIF_IRQ_BIT)  : "memory");
+    __asm__ __volatile__("msr DAIFClr, %0\n\t" : : "i" (DAIF_IRQ_BIT)  : "memory");
 }
 
 unsigned int sys_irq_save_disable(void)
 {
-	__asm__ __volatile__("msr DAIFSet, %0\n\t" : : "i" (DAIF_IRQ_BIT)  : "memory");
-	return 0;
+    __asm__ __volatile__("msr DAIFSet, %0\n\t" : : "i" (DAIF_IRQ_BIT)  : "memory");
+    return 0;
 }
 
 void metal_machine_cache_flush(void *addr, unsigned int len)
@@ -41,10 +41,10 @@ void metal_machine_cache_flush(void *addr, unsigned int len)
 #ifdef __CACHE_SUPPORTED__
     void *end = addr + (intptr_t)len - 0x1U;
 
-	if (!addr && !len)
+    if (!addr && !len)
         flush_dcache_all();
-	else
-		flush_dcache_range(addr, end);
+    else
+        flush_dcache_range(addr, end);
 #else
     (void)addr;
     (void)len;
@@ -56,10 +56,10 @@ void metal_machine_cache_invalidate(void *addr, unsigned int len)
 #ifdef __CACHE_SUPPORTED__
     void *end = addr + (intptr_t)len - 0x1U;
 
-	if (!addr && !len)
+    if (!addr && !len)
         invalidate_dcache_all();
-	else
-		invalidate_dcache_range(addr, end);
+    else
+        invalidate_dcache_range(addr, end);
 #else
     (void)addr;
     (void)len;
@@ -71,15 +71,15 @@ void metal_machine_cache_invalidate(void *addr, unsigned int len)
  */
 void metal_weak metal_generic_default_poll(void)
 {
-	asm volatile("wfi");
+    asm volatile("wfi");
 }
 
 void *metal_machine_io_mem_map(void *va, metal_phys_addr_t pa,
-				      size_t size, unsigned int flags)
+                      size_t size, unsigned int flags)
 {
     (void)pa;
     (void)size;
     (void)flags;
 
-	return va;
+    return va;
 }

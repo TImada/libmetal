@@ -6,8 +6,8 @@
  */
 
 /*
- * @file	freertos/raspi4/irq.c
- * @brief	FreeRTOS libmetal Raspberry pi 4B irq controller definitions.
+ * @file    freertos/raspi4/irq.c
+ * @brief    FreeRTOS libmetal Raspberry pi 4B irq controller definitions.
  */
 
 #include <errno.h>
@@ -26,7 +26,7 @@ static struct metal_irq irqs[NUM_IRQS]; /* Consider only one IRQ */
 static unsigned int vector = 0x0;
 
 static void metal_raspi4_irq_set_enable(struct metal_irq_controller *irq_cntr,
-				     int irq, unsigned int state)
+                     int irq, unsigned int state)
 {
     /* Do nothing here (IRQ enabling is done in metal_raspi4_irq_register()) */
     (void)irq_cntr;
@@ -37,10 +37,10 @@ static void metal_raspi4_irq_set_enable(struct metal_irq_controller *irq_cntr,
 
 /** Raspberry Pi 4B common platform IRQ controller */
 static METAL_IRQ_CONTROLLER_DECLARE(raspi4_irq_cntr,
-				    BASE_IRQ, 1,
-				    NULL,
-				    metal_raspi4_irq_set_enable, NULL,
-				    irqs);
+                    BASE_IRQ, 1,
+                    NULL,
+                    metal_raspi4_irq_set_enable, NULL,
+                    irqs);
 
 /**
  * @brief default handler
@@ -54,19 +54,19 @@ void metal_raspi4_irq_isr(void)
         return;
     }
     
-	(void)metal_irq_handle(&irqs[tmp], (int)vector);
+    (void)metal_irq_handle(&irqs[tmp], (int)vector);
     return;
 }
 
 int metal_raspi4_irq_init(unsigned int irq_vect)
 {
-	int ret = 0;
+    int ret = 0;
 
     vector = irq_vect;
-	ret =  metal_irq_register_controller(&raspi4_irq_cntr);
-	if (ret < 0) {
-		metal_log(METAL_LOG_ERROR, "%s: register irq controller failed.\n",
-			  __func__);
-	}
-	return ret;
+    ret =  metal_irq_register_controller(&raspi4_irq_cntr);
+    if (ret < 0) {
+        metal_log(METAL_LOG_ERROR, "%s: register irq controller failed.\n",
+              __func__);
+    }
+    return ret;
 }

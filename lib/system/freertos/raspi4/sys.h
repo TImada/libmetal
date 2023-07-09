@@ -6,8 +6,8 @@
  */
 
 /*
- * @file	freertos/raspi4/sys.h
- * @brief	freertos Raspberry pi 4B system primitives for libmetal.
+ * @file    freertos/raspi4/sys.h
+ * @brief   freertos Raspberry pi 4B system primitives for libmetal.
  */
 
 #ifndef __METAL_FREERTOS_SYS__H__
